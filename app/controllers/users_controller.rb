@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params[:user])
+    @user = User.new(user_params)
     if @user.save
       if params[:user][:avatar].present?
         render :crop
@@ -45,6 +45,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     redirect_to users_url, notice: "Successfully destroyed user."
+  end
+  private
+  def user_params
+    params.require(:user).permit(:title,:image)
   end
 
 end
